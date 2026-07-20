@@ -281,6 +281,73 @@
 
         renderMenu(menuData);
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKYcYqIJ6-g_xfxgvZqUMFDHYUKboSvtwf7OWWMQ27NS-dqWoh67LboBW0yQJocdhzhVjxwEZV7eW1/pub?output=csv";
+let globalMenuData = [];
+
+    // 2. Fetch Live Data from Google Sheets
+    async function loadMenuFromSheet() {
+        try {
+            const response = await fetch(SHEET_URL);
+            const data = await response.text();
+            
+            // Parse CSV rows into objects
+            const rows = data.split("\n").slice(1); // skip headers row
+            globalMenuData = rows.map(row => {
+                const columns = row.split(",");
+                return {
+                    name: columns[0]?.trim(),
+                    category: columns[1]?.trim(),
+                    price: columns[2]?.trim(),
+                    img: columns[3]?.trim(),
+                    desc: columns[4]?.trim()
+                };
+            }).filter(item => item.name); // Filter out empty rows
+
+            renderMenu(globalMenuData);
+        } catch (error) {
+            document.getElementById('menu-list').innerHTML = "<p style='color:red; text-align:center;'>Error loading live menu data.</p>";
+        }
+    }
+
+    // 3. Render Cards to the Screen
+    function renderMenu(items) {
+        const menuContainer = document.getElementById('menu-list');
+        menuContainer.innerHTML = '';
+        
+        items.forEach((item, index) => {
+            const itemHTML = `
+                <div class="menu-item" style="animation-delay: ${index * 0.05}s">
+                    <div class="item-image-container">
+                        <img src="${item.img}" alt="${item.name}" class="item-image" loading="lazy">
+                    </div>
+                    <div class="item-details">
+                        <div class="item-header">
+                            <div class="item-title">${item.name}</div>
+                            <div class="item-price">${item.price}</div>
+                        </div>
+                        <div class="item-description">${item.desc}</div>
+                    </div>
+                </div>
+            `;
+            menuContainer.innerHTML += itemHTML;
+        });
+    }
+
+    // 4. Category Filter Tabs Logic
+    function filterMenu(category, clickedTab) {
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => tab.classList.remove('active'));
+        clickedTab.classList.add('active');
+
+        if (category === 'all') {
+            renderMenu(globalMenuData);
+        } else {
+            const filtered = globalMenuData.filter(item => item.category === category);
+            renderMenu(filtered);
+        }
+    }
+
+    // 5. Run the function when page loads
+    loadMenuFromSheet();
     </script>
 </body>
 </html>
