@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rome 60 Cafe - Digital Menu Prototype</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --accent-color: #c5a880;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --border-color: rgba(255,255,255,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--surface-color);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            border: 1px solid var(--border-color);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(197, 168, 128, 0.2);
+            padding-bottom: 15px;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-color);
+            font-size: 2.4rem;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Category Tabs */
+        .categories {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 25px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .categories::-webkit-scrollbar {
+            height: 4px;
+        }
+        .categories::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        .tab {
+            background: rgba(255,255,255,0.03);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active, .tab:hover {
+            background: var(--accent-color);
+            color: #121212;
+            font-weight: 600;
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 12px rgba(197, 168, 128, 0.3);
+        }
+
+        /* Menu Grid Section */
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px; /* Increased spacing between cards */
+        }
+
+        /* Top Image, Bottom Text Card Layout */
+        .menu-item {
+            display: flex;
+            flex-direction: column; /* Stack vertically: image top, text bottom */
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Image at the Top */
+        .item-image-container {
+            width: 100%;
+            height: 200px; /* Gives the food photography center stage */
+            overflow: hidden;
+        }
+
+        .item-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .menu-item:hover .item-image {
+            transform: scale(1.05);
+        }
+
+        /* Details at the Bottom */
+        .item-details {
+            padding: 16px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+            padding-right: 10px;
+        }
+
+        .item-price {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+            white-space: nowrap;
+            background: rgba(197, 168, 128, 0.1);
+            padding: 2px 10px;
+            border-radius: 6px;
+        }
+
+        .item-description {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .dev-credit {
+            color: var(--accent-color) !important;
+            font-weight: 600;
+            margin-top: 8px;
+            display: block;
+            text-decoration: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-container">
+        <div class="header">
+            <h1>ROME 60 CAFE</h1>
+            <p>Premium Digital Menu</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="categories">
+            <button class="tab active" onclick="filterMenu('all', this)">All Items</button>
+            <button class="tab" onclick="filterMenu('coffee', this)">Espresso</button>
+            <button class="tab" onclick="filterMenu('signature', this)">Signatures</button>
+            <button class="tab" onclick="filterMenu('pastry', this)">Pastries</button>
+        </div>
+
+        <!-- Menu List -->
+        <div class="menu-list" id="menu-list">
+            <!-- Items loaded dynamically by JS -->
+        </div>
+
+        <div class="footer-note">
+            <p>Prices include service charge & VAT.</p>
+            <p>Menu design & functionality by:</p>
+            <a href="#" class="dev-credit">ABDI ABERA | WEB SOLUTIONS</a>
+        </div>
+    </div>
+
+    <script>
+        const images = {
+            macchiato: "Espresso-Macchiato-What-it-is-how-to-make-it-how-it-tastes.jpg",
+            icedLatte: "5b042809dad95de2fe2f68c7771dfa62.jpg",
+            affogato: "affogato-4776668-hero-08-40d7a68d12ba46f48eaea3c43aba715c.jpg",
+            refresher: "Minty-Fresh-Strawberry-Refresher.png",
+            croissant: "French-Croissants-SM-2363.jpg",
+            cake: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=400&auto=format&fit=crop"
+        };
+
+        const menuData = [
+            { name: "Traditional Macchiato", category: "coffee", price: "70 ETB", img: images.macchiato, desc: "Perfectly pulled double espresso shot stained with velvety steamed milk foam." },
+            { name: "Iced Spanish Latte", category: "coffee", price: "120 ETB", img: images.icedLatte, desc: "Rich espresso combined with condensed milk and chilled whole milk over ice." },
+            { name: "Rome 60 Special Affogato", category: "signature", price: "160 ETB", img: images.affogato, desc: "A scoop of premium vanilla bean gelato drowned in a hot, robust shot of espresso." },
+            { name: "Strawberry Mint Refresher", category: "signature", price: "140 ETB", img: images.refresher, desc: "Muddled fresh local strawberries, mint leaves, and crisp sparkling soda." },
+            { name: "Butter Croissant", category: "pastry", price: "90 ETB", img: images.croissant, desc: "Flaky, multi-layered classic French pastry baked fresh daily." },
+            { name: "Chocolate Fudge Slice", category: "pastry", price: "130 ETB", img: images.cake, desc: "Rich, decadent dark chocolate cake layers filled with smooth chocolate fudge." }
+        ];
+
+        function renderMenu(items) {
+            const menuContainer = document.getElementById('menu-list');
+            menuContainer.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const itemHTML = `
+                    <div class="menu-item" style="animation-delay: ${index * 0.05}s">
+                        <div class="item-image-container">
+                            <img src="${item.img}" alt="${item.name}" class="item-image" loading="lazy">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-header">
+                                <div class="item-title">${item.name}</div>
+                                <div class="item-price">${item.price}</div>
+                            </div>
+                            <div class="item-description">${item.desc}</div>
+                        </div>
+                    </div>
+                `;
+                menuContainer.innerHTML += itemHTML;
+            });
+        }
+
+        function filterMenu(category, clickedTab) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            clickedTab.classList.add('active');
+
+            if (category === 'all') {
+                renderMenu(menuData);
+            } else {
+                const filtered = menuData.filter(item => item.category === category);
+                renderMenu(filtered);
+            }
+        }
+
+        renderMenu(menuData);
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKYcYqIJ6-g_xfxgvZqUMFDHYUKboSvtwf7OWWMQ27NS-dqWoh67LboBW0yQJocdhzhVjxwEZV7eW1/pub?output=csv";
+    </script>
+</body>
+</html>
