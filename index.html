@@ -224,65 +224,11 @@
         </div>
     </div>
 
-    <script>
-        const images = {
-            macchiato: "Espresso-Macchiato-What-it-is-how-to-make-it-how-it-tastes.jpg",
-            icedLatte: "5b042809dad95de2fe2f68c7771dfa62.jpg",
-            affogato: "affogato-4776668-hero-08-40d7a68d12ba46f48eaea3c43aba715c.jpg",
-            refresher: "Minty-Fresh-Strawberry-Refresher.png",
-            croissant: "French-Croissants-SM-2363.jpg",
-            cake: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=400&auto=format&fit=crop"
-        };
-
-        const menuData = [
-            { name: "Traditional Macchiato", category: "coffee", price: "70 ETB", img: images.macchiato, desc: "Perfectly pulled double espresso shot stained with velvety steamed milk foam." },
-            { name: "Iced Spanish Latte", category: "coffee", price: "120 ETB", img: images.icedLatte, desc: "Rich espresso combined with condensed milk and chilled whole milk over ice." },
-            { name: "Rome 60 Special Affogato", category: "signature", price: "160 ETB", img: images.affogato, desc: "A scoop of premium vanilla bean gelato drowned in a hot, robust shot of espresso." },
-            { name: "Strawberry Mint Refresher", category: "signature", price: "140 ETB", img: images.refresher, desc: "Muddled fresh local strawberries, mint leaves, and crisp sparkling soda." },
-            { name: "Butter Croissant", category: "pastry", price: "90 ETB", img: images.croissant, desc: "Flaky, multi-layered classic French pastry baked fresh daily." },
-            { name: "Chocolate Fudge Slice", category: "pastry", price: "130 ETB", img: images.cake, desc: "Rich, decadent dark chocolate cake layers filled with smooth chocolate fudge." }
-        ];
-
-        function renderMenu(items) {
-            const menuContainer = document.getElementById('menu-list');
-            menuContainer.innerHTML = '';
-            
-            items.forEach((item, index) => {
-                const itemHTML = `
-                    <div class="menu-item" style="animation-delay: ${index * 0.05}s">
-                        <div class="item-image-container">
-                            <img src="${item.img}" alt="${item.name}" class="item-image" loading="lazy">
-                        </div>
-                        <div class="item-details">
-                            <div class="item-header">
-                                <div class="item-title">${item.name}</div>
-                                <div class="item-price">${item.price}</div>
-                            </div>
-                            <div class="item-description">${item.desc}</div>
-                        </div>
-                    </div>
-                `;
-                menuContainer.innerHTML += itemHTML;
-            });
-        }
-
-        function filterMenu(category, clickedTab) {
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            clickedTab.classList.add('active');
-
-            if (category === 'all') {
-                renderMenu(menuData);
-            } else {
-                const filtered = menuData.filter(item => item.category === category);
-                renderMenu(filtered);
-            }
-        }
-
-        renderMenu(menuData);
-
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKYcYqIJ6-g_xfxgvZqUMFDHYUKboSvtwf7OWWMQ27NS-dqWoh67LboBW0yQJocdhzhVjxwEZV7eW1/pub?output=csv";
-let globalMenuData = [];
+<script>
+    // 1. Your Google Sheet CSV Link
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKYCyqIJ6-g_xfxgvZqUMFDHYUKboSvtwf7OWWMQ27NS-dqWoh67LboBW0yQJocdhzhVjxwEZV7eW1/pub?output=csv";
+    
+    let globalMenuData = [];
 
     // 2. Fetch Live Data from Google Sheets
     async function loadMenuFromSheet() {
@@ -349,6 +295,6 @@ let globalMenuData = [];
 
     // 5. Run the function when page loads
     loadMenuFromSheet();
-    </script>
+</script>
 </body>
 </html>
