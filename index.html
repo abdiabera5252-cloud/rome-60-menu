@@ -464,7 +464,10 @@
             renderMenu(filtered);
         }
     }
-
+function togglePaymentModal() {
+        const modal = document.getElementById('paymentModal');
+        modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
     // 5. Run the function when page loads
     loadMenuFromSheet();
 </script>
