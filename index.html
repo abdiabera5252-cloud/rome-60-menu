@@ -82,6 +82,64 @@
             letter-spacing: 1px;
         }
 
+        /* Nav Bar: Payment Options Banner */
+        .nav-payment-bar {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-payment-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+      .payment-icons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .payment-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            text-decoration: none;
+        }
+
+        .payment-badge:hover {
+            transform: translateY(-1px);
+        }
+
+        .badge-telebirr {
+            background: rgba(0, 136, 204, 0.2);
+            color: #38b6ff;
+            border: 1px solid rgba(0, 136, 204, 0.4);
+        }
+
+        .badge-cbe {
+            background: rgba(139, 29, 131, 0.2);
+            color: #e066ff;
+            border: 1px solid rgba(139, 29, 131, 0.4);
+        }
+
+        .badge-info {
+            background: rgba(197, 168, 128, 0.15);
+            color: var(--accent-color);
+            border: 1px solid rgba(197, 168, 128, 0.3);
+        }
+        
         /* Category Tabs */
         .categories {
             display: flex;
@@ -192,6 +250,54 @@
             line-height: 1.5;
         }
 
+        /* Payment Details Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .payment-row:last-child {
+            border-bottom: none;
+        }
         .footer-note {
             text-align: center;
             margin-top: 40px;
@@ -230,6 +336,15 @@
             <p>Premium Digital Menu</p>
         </div>
 
+          <!-- Navigation Bar: Payment Options -->
+        <div class="nav-payment-bar">
+            <span class="nav-payment-title">Accepted Payments</span>
+            <div class="payment-icons">
+                <span class="payment-badge badge-telebirr" onclick="togglePaymentModal()">telebirr</span>
+                <span class="payment-badge badge-cbe" onclick="togglePaymentModal()">CBE Birr</span>
+                <span class="payment-badge badge-info" onclick="togglePaymentModal()">Info</span>
+            </div>
+        </div>  
         <!-- Filter Tabs -->
         <div class="categories">
             <button class="tab active" onclick="filterMenu('all', this)">All Items</button>
@@ -250,6 +365,37 @@
         </div>
     </div>
 
+<!-- Payment Modal -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="togglePaymentModal()">&#10005;</button>
+            <h3 style="color: var(--accent-color); margin-bottom: 15px;">Payment Options</h3>
+            
+            <div class="payment-row">
+                <div>
+                    <strong style="color: #38b6ff;">Telebirr / CBE Birr</strong>
+                    <div style="font-size:0.8rem; color:var(--text-muted);">Till / Account Number</div>
+                </div>
+                <div style="font-weight:600;">+251 925256424</div>
+            </div>
+
+            <div class="payment-row">
+                <div>
+                    <strong style="color: #e066ff;">CBE Bank</strong>
+                    <div style="font-size:0.8rem; color:var(--text-muted);">1000298742288</div>
+                </div>
+                <div style="font-weight:600;">Rome 60 Cafe</div>
+            </div>
+
+            <div class="payment-row">
+                <div>
+                    <strong style="color: var(--accent-color);">Cash / Card</strong>
+                    <div style="font-size:0.8rem; color:var(--text-muted);">At Counter or Table</div>
+                </div>
+                <div style="font-weight:600;">Accepted</div>
+            </div>
+        </div>
+    </div>        
 <script>
     // 1. Your Google Sheet CSV Link
     const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwLzGVZehBrByK6F3Si_ExYr-Vrq3pBV6f7mrtpupFZ_zkgIedJmD4y383EHX17-2RL-lwYTtpuH5T/pub?gid=0&single=true&output=csv";
