@@ -249,7 +249,41 @@
             color: var(--text-muted);
             line-height: 1.5;
         }
+/* Feedback Bar */
+        .feedback-bar {
+            margin-top: 35px;
+            background: rgba(197, 168, 128, 0.05);
+            border: 1px dashed rgba(197, 168, 128, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
 
+        .feedback-text {
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        .feedback-btn {
+            background: var(--accent-color);
+            color: #121212;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .feedback-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
         /* Payment Details Modal */
         .modal-overlay {
             position: fixed;
@@ -298,6 +332,55 @@
         .payment-row:last-child {
             border-bottom: none;
         }
+        /* Star Rating Controls */
+        .star-rating {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 15px 0;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .star {
+            color: #444;
+            transition: color 0.2s ease;
+        }
+
+        .star.selected, .star:hover {
+            color: var(--star-color);
+        }
+
+        .feedback-textarea {
+            width: 100%;
+            height: 90px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-main);
+            padding: 10px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            resize: none;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .feedback-textarea:focus {
+            border-color: var(--accent-color);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--accent-color);
+            color: #121212;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
         .footer-note {
             text-align: center;
             margin-top: 40px;
@@ -357,7 +440,15 @@
         <div class="menu-list" id="menu-list">
             <!-- Items loaded dynamically by JS -->
         </div>
-
+<!-- Feedback Bar -->
+        <div class="feedback-bar">
+            <div class="feedback-text">
+                <strong>How was your experience?</strong>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Help us improve Rome 60 Cafe</div>
+            </div>
+            <button class="feedback-btn" onclick="toggleFeedbackModal()">Leave Feedback</button>
+        </div>
+            
         <div class="footer-note">
             <p>Prices include service charge & VAT.</p>
             <p>Menu design & functionality by:</p>
@@ -395,13 +486,32 @@
                 <div style="font-weight:600;">Accepted</div>
             </div>
         </div>
-    </div>        
+    </div>  
+       <!-- Feedback Modal -->
+    <div class="modal-overlay" id="feedbackModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="toggleFeedbackModal()">&#10005;</button>
+            <h3 style="color: var(--accent-color); text-align: center; margin-bottom: 5px;">Your Feedback</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">Rate your visit and share your thoughts</p>
+
+            <div class="star-rating" id="starRating">
+                <span class="star" onclick="setRating(1)">&#9733;</span>
+                <span class="star" onclick="setRating(2)">&#9733;</span>
+                <span class="star" onclick="setRating(3)">&#9733;</span>
+                <span class="star" onclick="setRating(4)">&#9733;</span>
+                <span class="star" onclick="setRating(5)">&#9733;</span>
+            </div>
+
+            <textarea class="feedback-textarea" id="feedbackComment" placeholder="Write your comments or recommendations..."></textarea>
+            <button class="submit-btn" onclick="submitFeedback()">Send Feedback</button>
+        </div>
+    </div> 
 <script>
     // 1. Your Google Sheet CSV Link
     const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwLzGVZehBrByK6F3Si_ExYr-Vrq3pBV6f7mrtpupFZ_zkgIedJmD4y383EHX17-2RL-lwYTtpuH5T/pub?gid=0&single=true&output=csv";
     
     let globalMenuData = [];
-
+let selectedRating = 0;
     // 2. Fetch Live Data from Google Sheets
     async function loadMenuFromSheet() {
         try {
@@ -467,6 +577,34 @@
 function togglePaymentModal() {
         const modal = document.getElementById('paymentModal');
         modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+    function toggleFeedbackModal() {
+        const modal = document.getElementById('feedbackModal');
+        modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function setRating(rating) {
+        selectedRating = rating;
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((star, idx) => {
+            if (idx < rating) {
+                star.classList.add('selected');
+            } else {
+                star.classList.remove('selected');
+            }
+        });
+    }
+
+    function submitFeedback() {
+        if (selectedRating === 0) {
+            alert("Please select a star rating!");
+            return;
+        }
+        alert("Thank you for your feedback!");
+        toggleFeedbackModal();
+        selectedRating = 0;
+        setRating(0);
+        document.getElementById('feedbackComment').value = '';
     }
     // 5. Run the function when page loads
     loadMenuFromSheet();
