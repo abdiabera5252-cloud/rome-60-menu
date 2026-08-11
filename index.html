@@ -598,17 +598,40 @@ function togglePaymentModal() {
         });
     }
 
-    function submitFeedback() {
-        if (selectedRating === 0) {
-            alert("Please select a star rating!");
-            return;
-        }
-        alert("Thank you for your feedback!");
-        toggleFeedbackModal();
-        selectedRating = 0;
-        setRating(0);
-        document.getElementById('feedbackComment').value = '';
+  // Replace this with your full WhatsApp phone number (with country code, no + or spaces)
+const YOUR_WHATSAPP_NUMBER = "251925256424"; 
+
+function submitFeedback() {
+    if (selectedRating === 0) {
+        alert("Please select a star rating!");
+        return;
     }
+
+    const comment = document.getElementById('feedbackComment').value.trim();
+
+    // Create a formatted message for WhatsApp
+    const starsText = "⭐".repeat(selectedRating);
+    let message = `*NEW FEEDBACK - ROME 60 CAFE*\n\n`;
+    message += `*Rating:* ${starsText} (${selectedRating}/5)\n`;
+    if (comment) {
+        message += `*Comment:* ${comment}\n`;
+    }
+
+    // Encode the text so it forms a valid URL
+    const encodedMessage = encodeURIComponent(message);
+    
+    // Construct the WhatsApp URL
+    const whatsappUrl = `https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodedMessage}`;
+
+    // Reset inputs and close modal
+    toggleFeedbackModal();
+    selectedRating = 0;
+    setRating(0);
+    document.getElementById('feedbackComment').value = '';
+
+    // Open WhatsApp in a new tab/app window
+    window.open(whatsappUrl, '_blank');
+}
     // 5. Run the function when page loads
     loadMenuFromSheet();
 </script>
