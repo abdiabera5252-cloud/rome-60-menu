@@ -599,35 +599,72 @@ function togglePaymentModal() {
     }
 
 
-// Replace with your Telegram Username (without @) or phone number with country code
-const TELEGRAM_USERNAME = "Abdigooftaa"; 
+// 1. Replace with your actual Bot Token from @BotFather
+const TELEGRAM_BOT_TOKEN = "8947029118:AAFSWrtOKcW2MrsTJ38v3Hsck59EsqtUAbU";
 
-function submitFeedback() {
+// 2. Replace with your numeric Chat ID from @userinfobot (e.g. "123456789")
+const TELEGRAM_CHAT_ID = "6222942056";
+
+async function submitFeedback() {
+    // Validate star rating selection
     if (selectedRating === 0) {
         alert("Please select a star rating!");
         return;
     }
 
-    const comment = document.getElementById('feedbackComment').value.trim();
-    const starsText = "⭐".repeat(selectedRating);
+    const commentInput = document.getElementById('feedbackComment');
+    const comment = commentInput.value.trim();
+    const submitBtn = document.querySelector('.submit-btn');
 
-    let message = `NEW FEEDBACK - ROME 60 CAFE\n\n`;
-    message += `Rating: ${starsText} (${selectedRating}/5)\n`;
+    // Build the formatted message using Telegram-supported HTML tags
+    const starsText = "⭐".repeat(selectedRating);
+    let message = `<b>NEW FEEDBACK - ROME 60 CAFE</b>\n\n`;
+    message += `<b>Rating:</b> ${starsText} (${selectedRating}/5)\n`;
     if (comment) {
-        message += `Comment: ${comment}\n`;
+        message += `<b>Comment:</b> ${comment}\n`;
     }
 
-    const encodedMessage = encodeURIComponent(message);
-    
-    // Direct link to open your Telegram chat
-    const telegramUrl = `https://t.me/${TELEGRAM_USERNAME}?text=${encodedMessage}`;
+    // Indicate loading state on button
+    const originalBtnText = submitBtn.innerText;
+    submitBtn.innerText = "Sending...";
+    submitBtn.disabled = true;
 
-    toggleFeedbackModal();
-    selectedRating = 0;
-    setRating(0);
-    document.getElementById('feedbackComment').value = '';
+    try {
+        // Background POST request directly to Telegram Bot API
+        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                chat_id: TELEGRAM_CHAT_ID,
+                text: message,
+                parse_mode: "HTML"
+            })
+        });
 
-    window.open(telegramUrl, '_blank');
+        const data = await response.json();
+
+        if (data.ok) {
+            alert("Thank you! Your feedback has been sent.");
+
+            // Reset modal and inputs
+            toggleFeedbackModal();
+            selectedRating = 0;
+            setRating(0);
+            commentInput.value = '';
+        } else {
+            console.error("Telegram Error:", data);
+            alert("Failed to send feedback. Please check your Bot Token and Chat ID.");
+        }
+    } catch (error) {
+        console.error("Network Error:", error);
+        alert("A network error occurred. Please check your internet connection.");
+    } finally {
+        // Reset button state
+        submitBtn.innerText = originalBtnText;
+        submitBtn.disabled = false;
+    }
 }
     // 5. Run the function when page loads
     loadMenuFromSheet();
