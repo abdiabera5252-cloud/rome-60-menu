@@ -13,7 +13,7 @@
             --text-main: #ffffff;
             --text-muted: #a0a0a0;
             --border-color: rgba(255,255,255,0.05);
-            --star-color: #ffd700; /* Bright Yellow */
+            --star-color: #ffd700;
         }
 
         * {
@@ -40,14 +40,15 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
             border: 1px solid var(--border-color);
         }
-       
+        
         .header {
             text-align: center;
             margin-bottom: 20px;
             border-bottom: 1px solid rgba(197, 168, 128, 0.2);
             padding-bottom: 15px;
         }
-.logo-wrapper {
+
+        .logo-wrapper {
             width: 80px;
             height: 80px;
             margin: 0 auto 12px;
@@ -83,7 +84,6 @@
             letter-spacing: 1px;
         }
 
-        /* Nav Bar: Payment Options Banner */
         .nav-payment-bar {
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--border-color);
@@ -94,13 +94,15 @@
             align-items: center;
             justify-content: space-between;
         }
+
         .nav-payment-title {
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: var(--text-muted);
         }
-      .payment-icons {
+
+        .payment-icons {
             display: flex;
             gap: 8px;
             align-items: center;
@@ -140,8 +142,7 @@
             color: var(--accent-color);
             border: 1px solid rgba(197, 168, 128, 0.3);
         }
-        
-        /* Category Tabs */
+
         .categories {
             display: flex;
             gap: 8px;
@@ -154,6 +155,7 @@
         .categories::-webkit-scrollbar {
             height: 4px;
         }
+
         .categories::-webkit-scrollbar-thumb {
             background: var(--border-color);
             border-radius: 10px;
@@ -179,17 +181,15 @@
             box-shadow: 0 4px 12px rgba(197, 168, 128, 0.3);
         }
 
-        /* Menu Grid Section */
         .menu-list {
             display: flex;
             flex-direction: column;
-            gap: 24px; /* Increased spacing between cards */
+            gap: 24px;
         }
 
-        /* Top Image, Bottom Text Card Layout */
         .menu-item {
             display: flex;
-            flex-direction: column; /* Stack vertically: image top, text bottom */
+            flex-direction: column;
             background: rgba(255,255,255,0.02);
             border-radius: 16px;
             overflow: hidden;
@@ -198,10 +198,9 @@
             animation: fadeIn 0.5s ease forwards;
         }
 
-        /* Image at the Top */
         .item-image-container {
             width: 100%;
-            height: 200px; /* Gives the food photography center stage */
+            height: 200px;
             overflow: hidden;
         }
 
@@ -216,7 +215,6 @@
             transform: scale(1.05);
         }
 
-        /* Details at the Bottom */
         .item-details {
             padding: 16px;
         }
@@ -250,7 +248,7 @@
             color: var(--text-muted);
             line-height: 1.5;
         }
-/* Feedback Bar */
+
         .feedback-bar {
             margin-top: 0px;
             margin-bottom: 15px;
@@ -286,8 +284,8 @@
             opacity: 0.9;
             transform: translateY(-1px);
         }
-        /* Payment Details Modal */
-        .modal-overlay {
+
+        .modal-overlay, .payment-modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -302,168 +300,113 @@
             padding: 20px;
         }
 
-        .modal-card {
+        .modal-overlay.active, .payment-modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card, .payment-modal-card {
             background: var(--surface-color);
             border: 1px solid var(--border-color);
             border-radius: 20px;
             width: 100%;
-            max-width: 400px;
-            padding: 20px;
+            max-width: 420px;
+            padding: 24px;
             position: relative;
         }
 
-        .modal-close {
+        .modal-close, .close-btn {
             position: absolute;
             top: 15px;
             right: 15px;
             background: transparent;
             border: none;
             color: var(--text-muted);
-            font-size: 1.2rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #ffffff;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--accent-color);
+            color: #121212;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
         }
-        /* Modal Overlay Background */
-  .payment-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
 
-  .payment-modal-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
+        .btn-submit:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
 
-  /* Modal Card Box */
-  .payment-modal-card {
-    background: #ffffff;
-    width: 90%;
-    max-width: 420px;
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    transform: translateY(20px);
-    transition: transform 0.3s ease;
-  }
+        #paymentStatus {
+            margin-top: 14px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            display: none;
+            text-align: center;
+        }
 
-  .payment-modal-overlay.active .payment-modal-card {
-    transform: translateY(0);
-  }
+        #paymentStatus.success {
+            display: block;
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid #10b981;
+        }
 
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
+        #paymentStatus.pending {
+            display: block;
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            border: 1px solid #f59e0b;
+        }
 
-  .modal-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1f2937;
-    margin: 0;
-  }
-
-  .close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: #6b7280;
-    cursor: pointer;
-    line-height: 1;
-  }
-
-  /* Form Elements */
-  .form-group {
-    margin-bottom: 16px;
-  }
-
-  .form-group label {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #374151;
-    margin-bottom: 6px;
-  }
-
-  .form-control {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    outline: none;
-    box-sizing: border-box;
-    transition: border-color 0.2s;
-  }
-
-  .form-control:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-  }
-
-  /* Submit Button */
-  .btn-submit {
-    width: 100%;
-    background: #2563eb;
-    color: #ffffff;
-    border: none;
-    padding: 14px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-
-  .btn-submit:hover {
-    background: #1d4ed8;
-  }
-
-  .btn-submit:disabled {
-    background: #9ca3af;
-    cursor: not-allowed;
-  }
-
-  /* Response Status Message */
-  #paymentStatus {
-    margin-top: 14px;
-    padding: 10px;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    display: none;
-    text-align: center;
-  }
-
-  #paymentStatus.success {
-    display: block;
-    background-color: #d1fae5;
-    color: #065f46;
-  }
-
-  #paymentStatus.pending {
-    display: block;
-    background-color: #fef3c7;
-    color: #92400e;
-  }
-
-  #paymentStatus.error {
-    display: block;
-    background-color: #fee2e2;
-    color: #991b1b;
-  }
+        #paymentStatus.error {
+            display: block;
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid #ef4444;
+        }
 
         .payment-row {
             display: flex;
@@ -476,7 +419,7 @@
         .payment-row:last-child {
             border-bottom: none;
         }
-        /* Star Rating Controls */
+
         .star-rating {
             display: flex;
             gap: 8px;
@@ -487,7 +430,7 @@
         }
 
         .star {
-         color: #444444; /* Unselected star color (dark gray) */
+            color: #444444;
             transition: color 0.2s ease;
         }
 
@@ -524,7 +467,7 @@
             font-weight: 600;
             cursor: pointer;
         }
-        
+
         .footer-note {
             text-align: center;
             margin-top: 40px;
@@ -555,24 +498,23 @@
         <!-- Logo & Title Section -->
         <div class="header">
             <div class="logo-wrapper">
-                <!-- Replace src with your hosted logo link -->
-                <img src="https://tse3.mm.bing.net/th/id/OIP.g3OeEWtC-XjgORj94uFgEAHaHN?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" class="brand-logo">
+                <img src="https://tse3.mm.bing.net/th/id/OIP.g3OeEWtC-XjgORj94uFgEAHaHN?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" class="brand-logo" alt="Logo">
             </div>
-        <div class="header">
             <h1>ROME 60 CAFE</h1>
             <p>Premium Digital Menu</p>
         </div>
 
-          <!-- Navigation Bar: Payment Options -->
+        <!-- Navigation Bar: Payment Options -->
         <div class="nav-payment-bar">
             <span class="nav-payment-title">Accepted Payments</span>
             <div class="payment-icons">
-                <span class="payment-badge badge-telebirr" onclick="togglePaymentModal()">telebirr</span>
-                <span class="payment-badge badge-cbe" onclick="togglePaymentModal()">CBE </span>
-                <span class="payment-badge badge-info" onclick="togglePaymentModal()">Info</span>
+                <span class="payment-badge badge-telebirr" onclick="togglePaymentInfoModal()">telebirr</span>
+                <span class="payment-badge badge-cbe" onclick="togglePaymentInfoModal()">CBE</span>
+                <span class="payment-badge badge-info" onclick="openPaymentModal()">Verify Pay</span>
             </div>
         </div>  
-            <!-- Feedback Bar -->
+
+        <!-- Feedback Bar -->
         <div class="feedback-bar">
             <div class="feedback-text">
                 <strong>How was your experience?</strong>
@@ -580,6 +522,7 @@
             </div>
             <button class="feedback-btn" onclick="toggleFeedbackModal()">Leave Feedback</button>
         </div>
+
         <!-- Filter Tabs -->
         <div class="categories">
             <button class="tab active" onclick="filterMenu('all', this)">All Items</button>
@@ -593,7 +536,6 @@
             <!-- Items loaded dynamically by JS -->
         </div>
 
-            
         <div class="footer-note">
             <p>Prices include service charge & VAT.</p>
             <p>Menu design & functionality by:</p>
@@ -601,16 +543,16 @@
         </div>
     </div>
 
-<!-- Payment Modal -->
-    <div class="modal-overlay" id="paymentModal">
+    <!-- Info Modal -->
+    <div class="modal-overlay" id="paymentInfoModal">
         <div class="modal-card">
-            <button class="modal-close" onclick="togglePaymentModal()">&#10005;</button>
-            <h3 style="color: var(--accent-color); margin-bottom: 15px;">Payment Options</h3>
+            <button class="modal-close" onclick="togglePaymentInfoModal()">&#10005;</button>
+            <h3 style="color: var(--accent-color); margin-bottom: 15px;">Payment Accounts</h3>
             
             <div class="payment-row">
                 <div>
                     <strong style="color: #38b6ff;">Telebirr / CBE Birr</strong>
-                    <div style="font-size:0.8rem; color:var(--text-muted);"> phone Number</div>
+                    <div style="font-size:0.8rem; color:var(--text-muted);">Phone Number</div>
                 </div>
                 <div style="font-weight:600;">+251 925256424</div>
             </div>
@@ -618,7 +560,7 @@
             <div class="payment-row">
                 <div>
                     <strong style="color: #e066ff;">CBE Bank</strong>
-                    <div style="font-size:0.8rem; color:var(--text-muted);">Account number</div>
+                    <div style="font-size:0.8rem; color:var(--text-muted);">Account Number</div>
                 </div>
                 <div style="font-weight:600;">1000298742288</div>
             </div>
@@ -630,57 +572,38 @@
                 </div>
                 <div style="font-weight:600;">Accepted</div>
             </div>
-       
-        <!-- Modal HTML Structure -->
-    <div class="modal-header">
-      <h3 class="modal-title">Verify Bank Payment</h3>
-      <button class="close-btn" onclick="closePaymentModal()">&times;</button>
+        </div>
     </div>
 
-    <form id="paymentForm" onsubmit="handlePaymentSubmit(event)">
-      <div class="form-group">
-        <label for="customerName">Table Number or Customer Name</label>
-        <input 
-          type="text" 
-          id="customerName" 
-          class="form-control" 
-          placeholder="e.g., Table 5 or Abdi" 
-          required 
-        />
-      </div>
+    <!-- Payment Verification Modal -->
+    <div class="payment-modal-overlay" id="paymentModal">
+        <div class="payment-modal-card">
+            <button class="close-btn" onclick="closePaymentModal()">&times;</button>
+            <h3 class="modal-title">Verify Bank Payment</h3>
 
-      <div class="form-group">
-        <label for="orderAmount">Total Amount (ETB)</label>
-        <input 
-          type="number" 
-          id="orderAmount" 
-          class="form-control" 
-          placeholder="e.g., 450" 
-          step="0.01" 
-          required 
-        />
-      </div>
+            <form id="paymentForm" onsubmit="handlePaymentSubmit(event)">
+                <div class="form-group">
+                    <label for="customerName">Table Number or Customer Name</label>
+                    <input type="text" id="customerName" class="form-control" placeholder="e.g., Table 5 or Abdi" required />
+                </div>
 
-      <div class="form-group">
-        <label for="txnId">Bank Transaction Ref ID</label>
-        <input 
-          type="text" 
-          id="txnId" 
-          class="form-control" 
-          placeholder="e.g., FT2408141234 or Ref No" 
-          required 
-        />
-      </div>
+                <div class="form-group">
+                    <label for="orderAmount">Total Amount (ETB)</label>
+                    <input type="number" id="orderAmount" class="form-control" placeholder="e.g., 450" step="0.01" required />
+                </div>
 
-      <button type="submit" id="submitBtn" class="btn-submit">
-        Submit & Verify
-      </button>
+                <div class="form-group">
+                    <label for="txnId">Bank Transaction Ref ID</label>
+                    <input type="text" id="txnId" class="form-control" placeholder="e.g., FT2408141234 or Ref No" required />
+                </div>
 
-      <div id="paymentStatus"></div>
-    </form>
-  </div>
-</div>
-       <!-- Feedback Modal -->
+                <button type="submit" id="submitBtn" class="btn-submit">Submit & Verify</button>
+                <div id="paymentStatus"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
     <div class="modal-overlay" id="feedbackModal">
         <div class="modal-card">
             <button class="modal-close" onclick="toggleFeedbackModal()">&#10005;</button>
@@ -699,20 +622,22 @@
             <button class="submit-btn" onclick="submitFeedback()">Send Feedback</button>
         </div>
     </div> 
+
 <script>
-    // 1. Your Google Sheet CSV Link
     const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwLzGVZehBrByK6F3Si_ExYr-Vrq3pBV6f7mrtpupFZ_zkgIedJmD4y383EHX17-2RL-lwYTtpuH5T/pub?gid=0&single=true&output=csv";
-    
+    const API_ENDPOINT = 'https://payment-verifier-worker.abdi-dev.workers.dev/api/customer-payment';
+    const TELEGRAM_BOT_TOKEN = "8947029118:AAFSWrtOKcW2MrsTJ38v3Hsck59EsqtUAbU";
+    const TELEGRAM_CHAT_ID = "6222942056";
+
     let globalMenuData = [];
-let selectedRating = 0;
-    // 2. Fetch Live Data from Google Sheets
+    let selectedRating = 0;
+
     async function loadMenuFromSheet() {
         try {
             const response = await fetch(SHEET_URL);
             const data = await response.text();
             
-            // Parse CSV rows into objects
-            const rows = data.split("\n").slice(1); // skip headers row
+            const rows = data.split("\n").slice(1);
             globalMenuData = rows.map(row => {
                 const columns = row.split(",");
                 return {
@@ -722,16 +647,14 @@ let selectedRating = 0;
                     img: columns[3]?.trim(),
                     desc: columns[4]?.trim()
                 };
-            }).filter(item => item.name); // Filter out empty rows
+            }).filter(item => item.name);
 
             renderMenu(globalMenuData);
         } catch (error) {
             document.getElementById('menu-list').innerHTML = "<p style='color:red; text-align:center;'>Error loading live menu data.</p>";
         }
     }
- // 5. Run the function when page loads
-    loadMenuFromSheet();
-    // 3. Render Cards to the Screen
+
     function renderMenu(items) {
         const menuContainer = document.getElementById('menu-list');
         menuContainer.innerHTML = '';
@@ -755,7 +678,6 @@ let selectedRating = 0;
         });
     }
 
-    // 4. Category Filter Tabs Logic
     function filterMenu(category, clickedTab) {
         const tabs = document.querySelectorAll('.tab');
         tabs.forEach(tab => tab.classList.remove('active'));
@@ -768,83 +690,71 @@ let selectedRating = 0;
             renderMenu(filtered);
         }
     }
-function togglePaymentModal() {
-        const modal = document.getElementById('paymentModal');
-        modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+
+    function togglePaymentInfoModal() {
+        const modal = document.getElementById('paymentInfoModal');
+        modal.classList.toggle('active');
     }
-   // Cloudflare Worker API Endpoint
-  const API_ENDPOINT = 'https://payment-verifier-worker.abdi-dev.workers.dev/api/customer-payment';
 
-  // Function to open the modal (call this when checkout button is clicked)
-  function openPaymentModal(amount = '') {
-    if (amount) {
-      document.getElementById('orderAmount').value = amount;
+    function openPaymentModal(amount = '') {
+        if (amount) {
+            document.getElementById('orderAmount').value = amount;
+        }
+        document.getElementById('paymentModal').classList.add('active');
     }
-    document.getElementById('paymentModal').classList.add('active');
-  }
-<!-- Example Checkout / Pay Button in your menu -->
-<button onclick="openPaymentModal(450)">Proceed to Payment (450 ETB)</button>
-  // Function to close the modal
-  function closePaymentModal() {
-    document.getElementById('paymentModal').classList.remove('active');
-    document.getElementById('paymentStatus').style.display = 'none';
-  }
 
-  // Handle Form Submission
-  async function handlePaymentSubmit(event) {
-    event.preventDefault();
-
-    const submitBtn = document.getElementById('submitBtn');
-    const statusDiv = document.getElementById('paymentStatus');
-
-    const customerName = document.getElementById('customerName').value.trim();
-    const amount = parseFloat(document.getElementById('orderAmount').value);
-    const txnId = document.getElementById('txnId').value.trim();
-
-    // UI Loading state
-    submitBtn.disabled = true;
-    submitBtn.innerText = 'Verifying...';
-    statusDiv.style.display = 'none';
-    statusDiv.className = '';
-
-    try {
-      const response = await fetch(API_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          customerName: customerName,
-          amount: amount,
-          txnId: txnId
-        })
-      });
-
-      const data = await response.json();
-
-      if (data.status === 'PAID') {
-        statusDiv.className = 'success';
-        statusDiv.innerText = data.message || '✅ Payment verified successfully!';
-        setTimeout(() => {
-          closePaymentModal();
-          document.getElementById('paymentForm').reset();
-        }, 2500);
-      } else {
-        statusDiv.className = 'pending';
-        statusDiv.innerText = data.message || '⌛ Payment recorded. Awaiting bank SMS confirmation...';
-      }
-    } catch (error) {
-      console.error('Submission Error:', error);
-      statusDiv.className = 'error';
-      statusDiv.innerText = '❌ Failed to connect to verification server. Please try again.';
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerText = 'Submit & Verify';
+    function closePaymentModal() {
+        document.getElementById('paymentModal').classList.remove('active');
+        document.getElementById('paymentStatus').style.display = 'none';
     }
-  }
+
+    async function handlePaymentSubmit(event) {
+        event.preventDefault();
+
+        const submitBtn = document.getElementById('submitBtn');
+        const statusDiv = document.getElementById('paymentStatus');
+
+        const customerName = document.getElementById('customerName').value.trim();
+        const amount = parseFloat(document.getElementById('orderAmount').value);
+        const txnId = document.getElementById('txnId').value.trim();
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Verifying...';
+        statusDiv.style.display = 'none';
+
+        try {
+            const response = await fetch(API_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ customerName, amount, txnId })
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'PAID') {
+                statusDiv.className = 'success';
+                statusDiv.innerText = data.message || '✅ Payment verified successfully!';
+                setTimeout(() => {
+                    closePaymentModal();
+                    document.getElementById('paymentForm').reset();
+                }, 2500);
+            } else {
+                statusDiv.className = 'pending';
+                statusDiv.innerText = data.message || '⌛ Payment recorded. Awaiting bank SMS confirmation...';
+            }
+        } catch (error) {
+            console.error('Submission Error:', error);
+            statusDiv.className = 'error';
+            statusDiv.innerText = '❌ Failed to connect to verification server. Please try again.';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Submit & Verify';
+        }
+    }
+
     function toggleFeedbackModal() {
         const modal = document.getElementById('feedbackModal');
-        modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+        modal.classList.toggle('active');
     }
 
     function setRating(rating) {
@@ -859,75 +769,59 @@ function togglePaymentModal() {
         });
     }
 
-
-// 1. Replace with your actual Bot Token from @BotFather
-const TELEGRAM_BOT_TOKEN = "8947029118:AAFSWrtOKcW2MrsTJ38v3Hsck59EsqtUAbU";
-
-// 2. Replace with your numeric Chat ID from @userinfobot (e.g. "123456789")
-const TELEGRAM_CHAT_ID = "6222942056";
-
-async function submitFeedback() {
-    // Validate star rating selection
-    if (selectedRating === 0) {
-        alert("Please select a star rating!");
-        return;
-    }
-
-    const commentInput = document.getElementById('feedbackComment');
-    const comment = commentInput.value.trim();
-    const submitBtn = document.querySelector('.submit-btn');
-
-    // Build the formatted message using Telegram-supported HTML tags
-    const starsText = "⭐".repeat(selectedRating);
-    let message = `<b>NEW FEEDBACK - ROME 60 CAFE</b>\n\n`;
-    message += `<b>Rating:</b> ${starsText} (${selectedRating}/5)\n`;
-    if (comment) {
-        message += `<b>Comment:</b> ${comment}\n`;
-    }
-
-    // Indicate loading state on button
-    const originalBtnText = submitBtn.innerText;
-    submitBtn.innerText = "Sending...";
-    submitBtn.disabled = true;
-
-    try {
-        // Background POST request directly to Telegram Bot API
-        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                chat_id: TELEGRAM_CHAT_ID,
-                text: message,
-                parse_mode: "HTML"
-            })
-        });
-
-        const data = await response.json();
-
-        if (data.ok) {
-            alert("Thank you! Your feedback has been sent.");
-
-            // Reset modal and inputs
-            toggleFeedbackModal();
-            selectedRating = 0;
-            setRating(0);
-            commentInput.value = '';
-        } else {
-            console.error("Telegram Error:", data);
-            alert("Failed to send feedback. Please check your Bot Token and Chat ID.");
+    async function submitFeedback() {
+        if (selectedRating === 0) {
+            alert("Please select a star rating!");
+            return;
         }
-    } catch (error) {
-        console.error("Network Error:", error);
-        alert("A network error occurred. Please check your internet connection.");
-    } finally {
-        // Reset button state
-        submitBtn.innerText = originalBtnText;
-        submitBtn.disabled = false;
+
+        const commentInput = document.getElementById('feedbackComment');
+        const comment = commentInput.value.trim();
+        const submitBtn = document.querySelector('#feedbackModal .submit-btn');
+
+        const starsText = "⭐".repeat(selectedRating);
+        let message = `<b>NEW FEEDBACK - ROME 60 CAFE</b>\n\n`;
+        message += `<b>Rating:</b> ${starsText} (${selectedRating}/5)\n`;
+        if (comment) {
+            message += `<b>Comment:</b> ${comment}\n`;
+        }
+
+        const originalBtnText = submitBtn.innerText;
+        submitBtn.innerText = "Sending...";
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message,
+                    parse_mode: "HTML"
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.ok) {
+                alert("Thank you! Your feedback has been sent.");
+                toggleFeedbackModal();
+                selectedRating = 0;
+                setRating(0);
+                commentInput.value = '';
+            } else {
+                alert("Failed to send feedback. Check bot configurations.");
+            }
+        } catch (error) {
+            alert("A network error occurred. Check internet connection.");
+        } finally {
+            submitBtn.innerText = originalBtnText;
+            submitBtn.disabled = false;
+        }
     }
-}
-   
+
+    // Initialize
+    loadMenuFromSheet();
 </script>
 </body>
 </html>
