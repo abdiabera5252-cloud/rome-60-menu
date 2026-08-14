@@ -322,6 +322,148 @@
             font-size: 1.2rem;
             cursor: pointer;
         }
+        /* Modal Overlay Background */
+  .payment-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .payment-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Modal Card Box */
+  .payment-modal-card {
+    background: #ffffff;
+    width: 90%;
+    max-width: 420px;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+  }
+
+  .payment-modal-overlay.active .payment-modal-card {
+    transform: translateY(0);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #6b7280;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  /* Form Elements */
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+  }
+
+  .form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  /* Submit Button */
+  .btn-submit {
+    width: 100%;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-submit:hover {
+    background: #1d4ed8;
+  }
+
+  .btn-submit:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+  }
+
+  /* Response Status Message */
+  #paymentStatus {
+    margin-top: 14px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    display: none;
+    text-align: center;
+  }
+
+  #paymentStatus.success {
+    display: block;
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+
+  #paymentStatus.pending {
+    display: block;
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+
+  #paymentStatus.error {
+    display: block;
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
 
         .payment-row {
             display: flex;
@@ -489,7 +631,58 @@
                 <div style="font-weight:600;">Accepted</div>
             </div>
         </div>
-    </div>  
+    </div> 
+        <!-- Modal HTML Structure -->
+<div class="payment-modal-overlay" id="paymentModal">
+  <div class="payment-modal-card">
+    <div class="modal-header">
+      <h3 class="modal-title">Verify Bank Payment</h3>
+      <button class="close-btn" onclick="closePaymentModal()">&times;</button>
+    </div>
+
+    <form id="paymentForm" onsubmit="handlePaymentSubmit(event)">
+      <div class="form-group">
+        <label for="customerName">Table Number or Customer Name</label>
+        <input 
+          type="text" 
+          id="customerName" 
+          class="form-control" 
+          placeholder="e.g., Table 5 or Abdi" 
+          required 
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="orderAmount">Total Amount (ETB)</label>
+        <input 
+          type="number" 
+          id="orderAmount" 
+          class="form-control" 
+          placeholder="e.g., 450" 
+          step="0.01" 
+          required 
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="txnId">Bank Transaction Ref ID</label>
+        <input 
+          type="text" 
+          id="txnId" 
+          class="form-control" 
+          placeholder="e.g., FT2408141234 or Ref No" 
+          required 
+        />
+      </div>
+
+      <button type="submit" id="submitBtn" class="btn-submit">
+        Submit & Verify
+      </button>
+
+      <div id="paymentStatus"></div>
+    </form>
+  </div>
+</div>
        <!-- Feedback Modal -->
     <div class="modal-overlay" id="feedbackModal">
         <div class="modal-card">
