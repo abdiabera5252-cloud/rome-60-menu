@@ -729,7 +729,8 @@ let selectedRating = 0;
             document.getElementById('menu-list').innerHTML = "<p style='color:red; text-align:center;'>Error loading live menu data.</p>";
         }
     }
-
+ // 5. Run the function when page loads
+    loadMenuFromSheet();
     // 3. Render Cards to the Screen
     function renderMenu(items) {
         const menuContainer = document.getElementById('menu-list');
@@ -926,8 +927,7 @@ async function submitFeedback() {
         submitBtn.disabled = false;
     }
 }
-    // 5. Run the function when page loads
-    loadMenuFromSheet();
+   
 </script>
 </body>
 </html>
