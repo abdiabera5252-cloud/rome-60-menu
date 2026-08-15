@@ -731,22 +731,36 @@
 
             const data = await response.json();
 
-            if (data.status === 'PAID') {
+            if (response.ok && data.status === 'PAID') {
                 statusDiv.className = 'success';
                 statusDiv.innerText = data.message || '✅ Payment verified successfully!';
+                
+                setTimeout(() => {
+                    closePaymentModal();
+                    document.getElementById('paymentForm').reset();
+                }, 2000);
+
+            } else if (data.status === 'PENDING') {
+                statusDiv.className = 'pending';
+                statusDiv.innerText = data.message || '⌛ Payment recorded. Awaiting bank SMS confirmation...';
+
                 setTimeout(() => {
                     closePaymentModal();
                     document.getElementById('paymentForm').reset();
                 }, 2500);
+
             } else {
-                statusDiv.className = 'pending';
-                statusDiv.innerText = data.message || '⌛ Payment recorded. Awaiting bank SMS confirmation...';
+                statusDiv.className = 'error';
+                statusDiv.innerText = data.error || data.message || '❌ Verification failed.';
+                
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Submit & Verify';
             }
         } catch (error) {
             console.error('Submission Error:', error);
             statusDiv.className = 'error';
-            statusDiv.innerText = '❌ Failed to connect to verification server. Please try again.';
-        } finally {
+            statusDiv.innerText = '❌ Network error. Please try again.';
+            
             submitBtn.disabled = false;
             submitBtn.innerText = 'Submit & Verify';
         }
